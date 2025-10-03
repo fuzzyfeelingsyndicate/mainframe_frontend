@@ -13,13 +13,13 @@ fluidPage(
                 dashboardSidebar(
                   collapsed = T, 
                   sidebarMenu(
-                    menuItem("shop data", tabName = "shop data", icon = icon("dashboard")),
+                    menuItem("shwe data", tabName = "shwe data", icon = icon("dashboard")),
                     menuItem("RA data", tabName = "RA data", icon = icon("cogs"))
                   ), width=150
                 ),
                 
                 dashboardBody(
-                  tabItem(tabName = "shop data",
+                  tabItem(tabName = "shwe data",
                           fluidRow(
                             column(2, wellPanel(
                               h3("Input"),
@@ -32,7 +32,7 @@ fluidPage(
                               actionButton('ReadcombinationResults', 'Read'),
                               style = "background-color: black; padding: 10px; border-radius: 5px; color:white;"
                             )),
-                            column(10, box(title = h2('Top 10 shop query'),
+                            column(10, box(title = h2('Top 10 query'),
                                            DT::DTOutput("BestCombinations"),
                                            width = 12))
                           )
