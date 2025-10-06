@@ -3,23 +3,20 @@ library(shinydashboard)
 library(shiny)
 
 
-
-
-fluidPage(
-  
-  dashboardPage(skin = "red",
-                dashboardHeader(title = "test App"),
-                
-                dashboardSidebar(
-                  collapsed = T, 
-                  sidebarMenu(
-                    menuItem("shwe data", tabName = "shwe data", icon = icon("dashboard")),
-                    menuItem("RA data", tabName = "RA data", icon = icon("cogs"))
-                  ), width=150
-                ),
-                
-                dashboardBody(
-                  tabItem(tabName = "shwe data",
+dashboardPage(skin = "red",
+              dashboardHeader(title = "test App"),
+              
+              dashboardSidebar(
+                collapsed = TRUE, 
+                sidebarMenu(
+                  menuItem("shwe data", tabName = "shwe_data", icon = icon("dashboard")),
+                  menuItem("RA data", tabName = "RA_data", icon = icon("cogs"))
+                ), width = 150
+              ),
+              
+              dashboardBody(
+                tabItems(
+                  tabItem(tabName = "shwe_data",
                           fluidRow(
                             column(2, wellPanel(
                               h3("Input"),
@@ -38,5 +35,5 @@ fluidPage(
                           )
                   )
                 )
-                
-  )
+              )
+)
