@@ -3,6 +3,7 @@ library(shinydashboard)
 library(shiny)
 
 
+
 dashboardPage(skin = "red",
               dashboardHeader(title = "test App"),
               
@@ -20,17 +21,12 @@ dashboardPage(skin = "red",
                           fluidRow(
                             column(2, wellPanel(
                               h3("Input"),
-                              dateRangeInput('selectDate1', 'Select Date range'),
-                              selectInput('selectshop', 'Select sh', c(
-                                'sh1',
-                                'sh2',
-                                'sh3'
-                              )),
+                              textInput('eventid', "enter event id"),
                               actionButton('ReadcombinationResults', 'Read'),
                               style = "background-color: black; padding: 10px; border-radius: 5px; color:white;"
                             )),
-                            column(10, box(title = h2('Top 10 query'),
-                                           DT::DTOutput("BestCombinations"),
+                            column(10, box(title = h2('money line'),
+                                           DT::DTOutput("testtext"),
                                            width = 12))
                           )
                   )
