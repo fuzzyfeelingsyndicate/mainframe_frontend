@@ -1,10 +1,12 @@
 name: mainframe_shiny
-title:
+title: mainframe_shiny
 username: fuzzyfeelingsyndicate
 account: fuzzyfeelingsyndicate
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 16006099
-bundleId: 11150077
+bundleId: 11195952
 url: https://fuzzyfeelingsyndicate.shinyapps.io/mainframe_shiny/
 version: 1
+asMultiple: FALSE
+asStatic: FALSE
