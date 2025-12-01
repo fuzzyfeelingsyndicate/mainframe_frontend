@@ -49,6 +49,58 @@ function(input, output, session) {
   output$list_of_leagues <- renderDataTable({
     listOfLeagues_er()
   })
+
+    # ===========Connecting to SUPABASE ================================
+  
+  pconn_rsql <- dbConnect(RPostgres::Postgres(),  
+                          host='aws-1-eu-north-1.pooler.supabase.com',
+                          port=5432,
+                          user='postgres.jbreopqqqwaffxxjiphu',
+                          password='dave@40s',
+                          dbname = 'postgres')
+  
+  
+  events <- "SELECT * FROM events"
+  markets <- "SELECT * FROM markets"
+  odds_history <- "SELECT * FROM odds_history"
+  
+  events <- dbGetQuery(pconn_rsql, events)
+  markets <- dbGetQuery(pconn_rsql, markets)
+  odds_history <- dbGetQuery(pconn_rsql, odds_history)
+  
+  side <- function(whichSide){
+    odds_history %>% 
+      left_join(markets, by = 'market_id') %>% 
+      left_join(events, by='event_id') %>% 
+      arrange(event_id) %>% 
+      select(event_id, side,price, pulled_at, max_limit, market_id) %>% 
+      filter(side == whichSide)
+  }
+  
+  money_line <- side('home') %>%
+    rename('home_price' = price) %>% 
+    select(-side) %>% 
+    inner_join(
+      side('draw') %>% 
+        select(price, market_id) %>% 
+        rename('draw_price' = price),
+      by = 'market_id'
+    ) %>% 
+    inner_join(
+      side('away') %>% 
+        select(price, market_id) %>% 
+        rename('away_price' = price),
+      by = 'market_id'
+    ) %>% select(event_id,home_price,draw_price, away_price,max_limit, pulled_at) %>% 
+    left_join(
+      events %>% select(event_id, sport_id, league_name, home_team, away_team, starts),
+      by='event_id'
+    ) %>% select(event_id, league_name, home_team, away_team, starts, home_price,draw_price, away_price,max_limit, pulled_at )  
+  
+  money_line %>% group_by(event_id,pulled_at) %>% 
+
+
+  dbDisconnect(pconn_rsql)
   
 
 }
